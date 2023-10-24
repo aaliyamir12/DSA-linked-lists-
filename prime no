@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Define a linked list node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to display the elements of the linked list
+void displayList(struct Node* head) {
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to check if a number is prime
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+    if (num <= 3) {
+        return true;
+    }
+    if (num % 2 == 0 || num % 3 == 0) {
+        return false;
+    }
+
+    for (int i = 5; i * i <= num; i += 6) {
+        if (num % i == 0 || num % (i + 2) == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Function to display prime numbers in the linked list
+void displayPrimeNumbers(struct Node* head) {
+    struct Node* current = head;
+
+    while (current != NULL) {
+        if (isPrime(current->data)) {
+            printf("%d is a prime number.\n", current->data);
+        }
+        current = current->next;
+    }
+}
+
+int main() {
+    // Create a sample linked list
+    struct Node* head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    head->next = NULL;
+
+    struct Node* second = (struct Node*)malloc(sizeof(struct Node));
+    second->data = 2;
+    second->next = NULL;
+    head->next = second;
+
+    struct Node* third = (struct Node*)malloc(sizeof(struct Node));
+    third->data = 3;
+    third->next = NULL;
+    second->next = third;
+
+    struct Node* fourth = (struct Node*)malloc(sizeof(struct Node));
+    fourth->data = 4;
+    fourth->next = NULL;
+   
