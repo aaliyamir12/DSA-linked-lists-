@@ -1,0 +1,14 @@
+void reverse()
+{
+	struct node*current,*prev,*next;
+	current=head;
+	prev=next=0;
+	while(current!=0)
+	{
+		next=current->next;
+		current->next=prev;
+		prev=current;
+		current=next;
+	}
+	head=prev;
+}
