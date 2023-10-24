@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Define a linked list node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Define a queue structure using a linked list
+struct QueueLinkedList {
+    struct Node* front;
+    struct Node* rear;
+};
+
+// Function to initialize the queue
+void initializeQueueLinkedList(struct QueueLinkedList* queue) {
+    queue->front = NULL;
+    queue->rear = NULL;
+}
+
+// Function to check if the queue is empty
+bool isEmptyLinkedList(struct QueueLinkedList* queue) {
+    return (queue->front == NULL);
+}
+
+// Function to enqueue an element
+void enqueueLinkedList(struct QueueLinkedList* queue, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (isEmptyLinkedList(queue)) {
+        queue->front = newNode;
+        queue->rear = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+}
+
+// Function to dequeue an element
+int dequeueLinkedList(struct QueueLinkedList* queue) {
+    if (isEmptyLinkedList(queue)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1; // Return an error value
+    }
+
+    struct Node* frontNode = queue->front;
+    int value = frontNode->data;
+    queue->front = frontNode->next;
+    free(frontNode);
+
+    if (queue->front == NULL) {
+        queue->rear = NULL;
+    }
+
+    return value;
+}
+
+// Function to display the elements in the queue
+void displayQueueLinkedList(struct QueueLinkedList* queue) {
+    if (isEmptyLinkedList(queue)) {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    printf("Queue elements: ");
+    struct Node* current = queue->front;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct QueueLinkedList queueLinkedList;
+    initializeQueueLinkedList(&queueLinkedList);
+
+    enqueueLinkedList(&queueLinkedList, 1);
+    enqueueLinkedList(&queueLinkedList, 2);
+    enqueueLinkedList(&queueLinkedList, 3);
+
+    displayQueueLinkedList(&queueLinkedList);
+
+    int item = dequeueLinkedList(&queueLinkedList);
+   
