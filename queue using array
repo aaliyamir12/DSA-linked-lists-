@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 100 // Maximum size of the queue
+
+// Define a queue structure using an array
+struct QueueArray {
+    int array[MAX_SIZE];
+    int front, rear;
+};
+
+// Function to initialize the queue
+void initializeQueueArray(struct QueueArray* queue) {
+    queue->front = -1;
+    queue->rear = -1;
+}
+
+// Function to check if the queue is empty
+bool isEmptyArray(struct QueueArray* queue) {
+    return (queue->front == -1);
+}
+
+// Function to check if the queue is full
+bool isFullArray(struct QueueArray* queue) {
+    return ((queue->rear + 1) % MAX_SIZE == queue->front);
+}
+
+// Function to enqueue an element
+void enqueueArray(struct QueueArray* queue, int value) {
+    if (isFullArray(queue)) {
+        printf("Queue is full. Cannot enqueue %d.\n", value);
+        return;
+    }
+    if (isEmptyArray(queue)) {
+        queue->front = 0;
+    }
+    queue->rear = (queue->rear + 1) % MAX_SIZE;
+    queue->array[queue->rear] = value;
+}
+
+// Function to dequeue an element
+int dequeueArray(struct QueueArray* queue) {
+    if (isEmptyArray(queue)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1; // Return an error value
+    }
+    int value = queue->array[queue->front];
+    if (queue->front == queue->rear) {
+        queue->front = -1;
+        queue->rear = -1;
+    } else {
+        queue->front = (queue->front + 1) % MAX_SIZE;
+    }
+    return value;
+}
+
+// Function to display the elements in the queue
+void displayQueueArray(struct QueueArray* queue) {
+    if (isEmptyArray(queue)) {
+        printf("Queue is empty.\n");
+        return;
+    }
+    printf("Queue elements: ");
+    int i = queue->front;
+    while (1) {
+        printf("%d ", queue->array[i]);
+        if (i == queue->rear) {
+            break;
+        }
+        i = (i + 1) % MAX_SIZE;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct QueueArray queueArray;
+    initializeQueueArray(&queueArray);
+
+    enqueueArray(&queueArray, 1);
+    enqueueArray(&queueArray, 2);
+    enqueueArray(&queueArray, 3);
+
+    displayQueueArray(&queueArray);
+
+    int item = dequeueArray(&queueArray);
+    printf("Dequeued: %d\n", item);
+
+    displayQueueArray(&queueArray);
+
+    return 0;
+}
