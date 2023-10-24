@@ -1,0 +1,29 @@
+
+void biggest()
+{
+	int big;
+	struct node*trav;
+	trav=head;
+	big=trav->data;
+	while(trav!=0)
+	{
+		if(trav->data>big)
+		big=trav->data;
+		trav=trav->next;
+	}
+	printf("%d",big);
+	}
+	void smallest()
+{
+	int small;
+	struct node*trav;
+	trav=head;
+	small=trav->data;
+	while(trav!=0)
+	{
+		if(trav->data<small)
+		small=trav->data;
+		trav=trav->next;
+	}
+	printf("%d",small);
+	}
