@@ -1,0 +1,11 @@
+void even()
+{
+	struct node*trav;
+	trav=head;
+	while(trav!=0)
+	{
+		if(trav->data%2==0)
+		printf("%d",trav->data);
+		trav=trav->next;
+	}
+}
