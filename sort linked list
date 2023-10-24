@@ -1,0 +1,23 @@
+
+void sort()
+{
+	struct node *temp1,*temp2;
+	int ptr;
+	temp1=head;
+	while(temp1!=0)
+	{
+		temp2=temp1->next;
+		while(temp2!=0)
+		{
+			if(temp1->data>temp2->data)
+			{
+			
+			ptr=temp1->data;
+			temp1->data=temp2->data;
+			temp2->data=ptr;
+			}
+				temp2=temp2->next;
+		}
+		temp1=temp1->next;
+	}
+}
