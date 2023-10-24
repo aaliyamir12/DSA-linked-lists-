@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node*next;
+	struct node *prev;
+};
+struct node*head=0;
+struct node*tail=0;
+void create()
+{
+	int i,n;
+	printf("enter the no of nodes you want to create");
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)
+	{
+		struct node*temp;
+		temp=(struct node*) malloc(sizeof(struct node));
+		printf("enter data");
+		scanf("%d",&temp->data);
+		temp->next=0;
+		temp->prev=0;
+		if(head==0)
+		{
+			head=tail=temp;
+		}
+		else{
+			tail->next=temp;
+			temp->prev=tail;
+			tail=temp;
+		}
+	}
+}
+void display()
+{
+	struct node*trav;
+	trav=head;
+	while(trav!=0)
+	{
+		printf("\n%d",trav->data);
+		trav=trav->next;
+	}
+}
+void insert()
+{
+	int pos;
+	struct node*temp,*trav;
+	trav=head;
+		temp=(struct node*) malloc(sizeof(struct node));
+		printf("enter value");
+		scanf("%d",&temp->data);
+		printf("enter value after which you want to enter data");
+		scanf("%d",&pos);
+		while(trav->data!=pos)
+		{
+			trav=trav->next;
+		}
+		temp->next=trav->next;
+		temp->prev=trav;
+		trav->next=temp;
+		trav->next->prev=temp;
+	
+}
+void del()
+{
+	int item;
+	struct node*temp,*trav,*prev;
+	trav=head;
+		temp=(struct node*) malloc(sizeof(struct node));
+		printf("enter item to be deleted");
+		scanf("%d",&item);
+		while(trav->data!=item){
+			prev=trav;
+			trav=trav->next;
+			
+		}
+		if(trav==head)
+		{
+		
+			head=head->next;
+			head->prev=0;
+			free(trav);
+			
+		}
+		else if(trav==tail)
+		{
+			tail=tail->prev;
+			tail->next=0;
+			free(trav);
+		}
+		else{
+			trav->prev->next=trav->next;
+			trav->next->prev=trav->prev;
+			free(trav);
+		}
+}
+int main()
+{
+	create();
+	display();
+	del();
+	display();
+}
